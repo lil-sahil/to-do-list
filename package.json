@@ -18,5 +18,8 @@
   "homepage": "https://github.com/lil-sahil/to-do-list#readme",
   "devDependencies": {
     "webpack-cli": "^4.9.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4"
   }
 }

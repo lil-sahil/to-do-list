@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Helper classes */
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sub-titles {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2.5rem;
+}
+
+
+/* Grid Template */
+#title-container {
+  grid-area: title;
+  border-bottom: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#project-sidebar {
+  grid-area: sidebar;
+  border-right: 1px solid blue;
+}
+
+#to-do-lists-container {
+  grid-area: lists;
+  background-color: orange;
+}
+
+
+#grid-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 150px auto;
+  grid-template-areas: 
+    "title title"
+    "sidebar lists";
+  height: 100vh;
+}
+
+
+/* Title */
+#title {
+  margin-left: 1rem;
+}
+
+/* Project Sidebar */
+#project-title {
+  margin-top: 1rem;
+}
+
+/* To do title */
+#to-do-list-title {
+  margin-top: 1rem;
+}
+
