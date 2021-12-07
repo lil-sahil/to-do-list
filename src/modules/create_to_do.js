@@ -1,4 +1,4 @@
-import { toDoContainer } from "../helper_funcs/dom.js";
+import { toDoItems } from "../helper_funcs/dom.js";
 
 // Create to do factory
 
@@ -29,15 +29,18 @@ const toDoRender = (() => {
 
   toDoController.toDoList.forEach( item => {
     
-    let a = document.createElement('div');
+    let toDoItem = document.createElement('div');
     
-    a.innerHTML = 
+    toDoItem.innerHTML = 
       `
-        <h1>${item.title}</h1>
+        ${item.project}
+        ${item.title}
+        ${item.description}
+        ${item.dueDate}
       `
-    
-      toDoContainer().appendChild(a);
+    toDoItems().appendChild(toDoItem);
   });
+  
 })();
 
 

@@ -25,7 +25,8 @@ ul > li {
 .flex-col {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  align-items: center;
 }
 
 .titles {
@@ -113,5 +114,9 @@ ul > li {
 /* To do title */
 #to-do-list-title {
   margin-top: 1rem;
+}
+
+#to-do-items {
+  display: flex;
 }
 
