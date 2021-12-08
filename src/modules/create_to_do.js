@@ -1,4 +1,4 @@
-import { toDoItems } from "../helper_funcs/dom.js";
+import { toDoItems, showOnClick} from "../helper_funcs/dom.js";
 
 // Create to do factory
 
@@ -24,7 +24,12 @@ const toDoController = (() => {
 
 
 const toDoRender = (() => {
+
+
   let test = createToDo('Project 1', "test1");
+  toDoController.appendToDo(test);
+
+  let test_2 = createToDo('Project 2', "test2");
   toDoController.appendToDo(test);
 
   toDoController.toDoList.forEach( item => {
@@ -33,13 +38,23 @@ const toDoRender = (() => {
     
     toDoItem.innerHTML = 
       `
-        ${item.project}
-        ${item.title}
-        ${item.description}
-        ${item.dueDate}
+        <div class = "summary">
+          ${item.title}
+          ${item.dueDate}
+        </div>
+        
+        <div class = "detail-show">
+          ${item.description}
+        </div>
       `
+    toDoItem.className += "to-do-item";
+    
     toDoItems().appendChild(toDoItem);
+    
+
   });
+
+  showOnClick();
   
 })();
 

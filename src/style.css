@@ -117,6 +117,19 @@ ul > li {
 }
 
 #to-do-items {
+  margin-top: 1rem;
   display: flex;
 }
+
+.to-do-item {
+  border: var(--color-primary) solid 1px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.detail-show {
+  display: none;
+}
+
+
 
