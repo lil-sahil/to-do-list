@@ -10,7 +10,15 @@ export let showOnClick = () => {
   // Show Content
   item.forEach(e => {
     e.addEventListener('click', () => {
-      e.nextElementSibling.style.display = 'block';
+      
+      if (e.nextElementSibling.style.display === 'block'){
+        console.log('here')
+        e.nextElementSibling.style.display = 'none'
+      }else if (e.nextElementSibling.style.display === 'none'){
+        console.log('here')
+
+        e.nextElementSibling.style.display = 'block'
+      };
     });
   });
 };

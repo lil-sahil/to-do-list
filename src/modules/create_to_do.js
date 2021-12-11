@@ -43,7 +43,7 @@ const toDoRender = (() => {
           ${item.dueDate}
         </div>
         
-        <div class = "detail-show">
+        <div class = "description" style = "display:none">
           ${item.description}
         </div>
       `
