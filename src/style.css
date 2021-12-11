@@ -119,15 +119,35 @@ ul > li {
 #to-do-items {
   margin-top: 1rem;
   display: flex;
+  width: 50%;
 }
 
 .to-do-item {
   border: var(--color-primary) solid 1px;
   border-radius: 5px;
   font-size: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.summary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 
+.description {
+  margin-top: 5px;
+  display: none;
+}
 
-
-
+.add-to-do > button {
+  margin-top: 2rem;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  font-size: 2rem;
+  color: #fff;
+  border-color: #fff;
+}

@@ -3,6 +3,10 @@ export let toDoItems = () => {
   return document.querySelector('#to-do-items');
 }
 
+// To do button
+
+export let addtoDoButton = document.querySelector('.add-to-do > button');
+
 
 export let showOnClick = () => {
   let item = document.querySelectorAll(".summary");
@@ -14,9 +18,7 @@ export let showOnClick = () => {
       if (e.nextElementSibling.style.display === 'block'){
         console.log('here')
         e.nextElementSibling.style.display = 'none'
-      }else if (e.nextElementSibling.style.display === 'none'){
-        console.log('here')
-
+      }else {
         e.nextElementSibling.style.display = 'block'
       };
     });

@@ -1,11 +1,10 @@
-import { toDoItems, showOnClick} from "../helper_funcs/dom.js";
+import { toDoItems, showOnClick, addtoDoButton} from "../helper_funcs/dom.js";
 
 // Create to do factory
 
-const createToDo = (project, title, description = 'Provide Description', dueDate = 'Select Due Date', priority = 'Select Priority') => {
+const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'Select Priority') => {
   return { project, title, description,dueDate, priority };
 };
-
 
 
 const toDoController = (() => {
@@ -18,6 +17,17 @@ const toDoController = (() => {
     toDoList.push(toDo);
   };
 
+  addtoDoButton.addEventListener('click', () => {
+    appendToDo( createToDo('Project 1', 'Brush teeth') );
+    toDoRender.display();
+  });
+
+
+  // const updateItems = () => {
+
+  // }
+  
+
   return { toDoList, appendToDo }
 })();
 
@@ -25,36 +35,50 @@ const toDoController = (() => {
 
 const toDoRender = (() => {
 
+  const removeAllChildNodes = (ele) => {
+    while (ele.firstChild){
+      ele.removeChild(ele.firstChild);
+    }; 
+  };
 
-  let test = createToDo('Project 1', "test1");
-  toDoController.appendToDo(test);
 
-  let test_2 = createToDo('Project 2', "test2");
-  toDoController.appendToDo(test);
+  const rendertoDoItem = (i) => {
+    let title = i.title
+    let description = i.description
+    let dueDate = i.dueDate
 
-  toDoController.toDoList.forEach( item => {
-    
+
     let toDoItem = document.createElement('div');
-    
+
     toDoItem.innerHTML = 
       `
         <div class = "summary">
-          ${item.title}
-          ${item.dueDate}
+          <div class = "title-form"> <input type = "text", value = ${title}> </div>
+          <div class = "date"> <input type = "date", value = ${dueDate}> </div>
         </div>
-        
-        <div class = "description" style = "display:none">
-          ${item.description}
+
+        <div class = "description">
+          <div class = "description-form"> <input type = "text", value = ${description}> </div>
         </div>
-      `
+      `      
     toDoItem.className += "to-do-item";
-    
-    toDoItems().appendChild(toDoItem);
-    
 
-  });
+    return toDoItem;
+  };
 
-  showOnClick();
+  const display = () => {
+      // Remove previously loaded to do items
+    removeAllChildNodes(toDoItems());
+
+    toDoController.toDoList.forEach( item => {        
+
+      toDoItems().appendChild(rendertoDoItem(item));
+
+    });
+    showOnClick();
+  }
+
+  return { display }
   
 })();
 
