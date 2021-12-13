@@ -1,4 +1,9 @@
-import { toDoItems, showOnClick, addtoDoButton} from "../helper_funcs/dom.js";
+import { toDoItems, 
+         showOnClick, 
+         addtoDoButton, 
+         getToDoTitle,
+         getToDoDate,
+         getToDoDescription} from "../helper_funcs/dom.js";
 
 // Create to do factory
 
@@ -18,15 +23,53 @@ const toDoController = (() => {
   };
 
   addtoDoButton.addEventListener('click', () => {
-    appendToDo( createToDo('Project 1', 'Brush teeth') );
+    appendToDo( createToDo('Project 1', "Enter Task") );
+    updateToDoList();
     toDoRender.display();
   });
 
+  const updateToDoList = () => {
+    updateDate()
+    updateDescription()
+    updateTitle()
+  }
 
-  // const updateItems = () => {
 
-  // }
-  
+  const updateTitle = () => {
+    // when clicked elsewhere on the window,update items in the list.
+    
+    let i = 0
+
+    // Update the title
+    for (const e of getToDoTitle()){
+      toDoList[i].title = e.value
+      i++
+    }
+  }
+
+  const updateDate = () => {
+    // when clicked elsewhere on the window,update items in the list.
+    
+    let i = 0
+
+    // Update the title
+    for (const e of getToDoDate()){
+      toDoList[i].dueDate = e.value
+      i++
+    }
+  }
+
+  const updateDescription = () => {
+    // when clicked elsewhere on the window,update items in the list.
+    
+    let i = 0
+
+    // Update the title
+    for (const e of getToDoDescription()){
+      toDoList[i].description = e.value
+      i++
+    }
+  }
 
   return { toDoList, appendToDo }
 })();
@@ -47,18 +90,17 @@ const toDoRender = (() => {
     let description = i.description
     let dueDate = i.dueDate
 
-
     let toDoItem = document.createElement('div');
 
     toDoItem.innerHTML = 
       `
         <div class = "summary">
-          <div class = "title-form"> <input type = "text", value = ${title}> </div>
-          <div class = "date"> <input type = "date", value = ${dueDate}> </div>
+          <div class = "title-form"> <input type = "text" value = "${title}" class = "title"> </div>
+          <div class = "date-form"> <input type = "date" value = "${dueDate}" class = "date"> </div>
         </div>
 
         <div class = "description">
-          <div class = "description-form"> <input type = "text", value = ${description}> </div>
+          <input type = "text" value = "${description}" class = "description-form">
         </div>
       `      
     toDoItem.className += "to-do-item";
