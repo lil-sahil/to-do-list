@@ -1,16 +1,27 @@
-import { toDoItems, 
-         showOnClick, 
+import { toDoItems,
+         toDoItem, 
+         toDoSummary, 
          addtoDoButton, 
          getToDoTitle,
          getToDoDate,
-         getToDoDescription} from "../helper_funcs/dom.js";
+         getToDoDescription,
+         toDoDelete} from "../helper_funcs/dom.js";
 
-// Create to do factory
+
+
+
+// To Do Factory
+// ------------------------------------------------------------------
 
 const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'Select Priority') => {
   return { project, title, description,dueDate, priority };
 };
 
+
+
+
+// To Do Controller Module
+// ------------------------------------------------------------------
 
 const toDoController = (() => {
 
@@ -36,7 +47,6 @@ const toDoController = (() => {
 
 
   const updateTitle = () => {
-    // when clicked elsewhere on the window,update items in the list.
     
     let i = 0
 
@@ -48,7 +58,6 @@ const toDoController = (() => {
   }
 
   const updateDate = () => {
-    // when clicked elsewhere on the window,update items in the list.
     
     let i = 0
 
@@ -60,7 +69,6 @@ const toDoController = (() => {
   }
 
   const updateDescription = () => {
-    // when clicked elsewhere on the window,update items in the list.
     
     let i = 0
 
@@ -76,6 +84,9 @@ const toDoController = (() => {
 
 
 
+
+// To Do Display Module
+// ------------------------------------------------------------------
 const toDoRender = (() => {
 
   const removeAllChildNodes = (ele) => {
@@ -83,6 +94,19 @@ const toDoRender = (() => {
       ele.removeChild(ele.firstChild);
     }; 
   };
+
+
+  const renderDeleteButton = () => {
+    toDoItem().forEach( e => {
+      e.addEventListener('mouseover', () => {
+        e.lastElementChild.classList.add("show");
+      })
+
+      e.addEventListener('mouseout', () => {
+        e.lastElementChild.classList.remove("show")
+      })
+    })
+  }
 
 
   const rendertoDoItem = (i) => {
@@ -102,11 +126,31 @@ const toDoRender = (() => {
         <div class = "description">
           <input type = "text" value = "${description}" class = "description-form">
         </div>
+
+        <div class = "delete"><i class="fas fa-trash-alt"></i></div>
       `      
     toDoItem.className += "to-do-item";
 
     return toDoItem;
   };
+
+  const expandRetract = () => {
+  
+    // Show Content
+    toDoSummary().forEach(e => {
+      e.addEventListener('click', (el) => {
+  
+        if (el.target.classList.contains("summary")){
+          if (e.nextElementSibling.style.display === 'block'){
+            e.nextElementSibling.style.display = 'none'
+          }else {
+            e.nextElementSibling.style.display = 'block'
+          };
+        }
+      });
+    });
+  };
+
 
   const display = () => {
       // Remove previously loaded to do items
@@ -117,7 +161,8 @@ const toDoRender = (() => {
       toDoItems().appendChild(rendertoDoItem(item));
 
     });
-    showOnClick();
+    expandRetract();
+    renderDeleteButton();
   }
 
   return { display }

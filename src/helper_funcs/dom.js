@@ -7,23 +7,13 @@ export let toDoItems = () => {
 export let addtoDoButton = document.querySelector('.add-to-do > button');
 
 
-export let showOnClick = () => {
-  let item = document.querySelectorAll(".summary");
+export let toDoSummary = () => {
+  return document.querySelectorAll(".summary");
+}
 
-  // Show Content
-  item.forEach(e => {
-    e.addEventListener('click', (el) => {
-
-      if (el.target.classList.contains("summary")){
-        if (e.nextElementSibling.style.display === 'block'){
-          e.nextElementSibling.style.display = 'none'
-        }else {
-          e.nextElementSibling.style.display = 'block'
-        };
-      }
-    });
-  });
-};
+export let toDoItem = () => {
+  return document.querySelectorAll('.to-do-item');
+}
 
 
 export let getToDoTitle = () => {
@@ -36,4 +26,8 @@ export let getToDoDate = () => {
 
 export let getToDoDescription = () => {
   return document.getElementsByClassName("description-form")
+};
+
+export let toDoDelete = () => {
+  return document.querySelectorAll('.to-do-item > .delete');
 };
