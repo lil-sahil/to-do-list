@@ -37,7 +37,15 @@ const toDoController = (() => {
     appendToDo( createToDo('Project 1', "Enter Task") );
     updateToDoList();
     toDoRender.display();
+    deleteButton();
   });
+
+
+  // CLick event
+  window.addEventListener('click', () => {
+    console.log('Clicked!')
+    updateToDoList();
+  })
 
   const updateToDoList = () => {
     updateDate()
@@ -61,7 +69,7 @@ const toDoController = (() => {
     
     let i = 0
 
-    // Update the title
+    // Update the date
     for (const e of getToDoDate()){
       toDoList[i].dueDate = e.value
       i++
@@ -72,14 +80,44 @@ const toDoController = (() => {
     
     let i = 0
 
-    // Update the title
+    // Update the description
     for (const e of getToDoDescription()){
       toDoList[i].description = e.value
       i++
     }
   }
 
-  return { toDoList, appendToDo }
+  // Delete button functionality
+  const deleteButton = () => {
+    toDoDelete().forEach(e => {
+      e.addEventListener('click', (el) => {
+
+        deleteItem(el.path[2].querySelector('.summary > .title-form > input').value,
+                   el.path[2].querySelector('.description > input').value)
+        
+        toDoRender.display()
+        deleteButton();
+
+        
+      })
+
+
+    })
+  }
+
+
+  const deleteItem = (title, description) => {
+    console.log(toDoList)
+    toDoList = toDoList.filter(listItem => listItem.title !== title)
+    console.log(toDoList) 
+  }
+
+  const getToDoList = () => {
+    return toDoList
+  }
+
+
+  return { getToDoList, appendToDo }
 })();
 
 
@@ -156,7 +194,7 @@ const toDoRender = (() => {
       // Remove previously loaded to do items
     removeAllChildNodes(toDoItems());
 
-    toDoController.toDoList.forEach( item => {        
+    toDoController.getToDoList().forEach( item => {        
 
       toDoItems().appendChild(rendertoDoItem(item));
 
