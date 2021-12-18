@@ -51,6 +51,7 @@ export const toDoController = (() => {
   // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
     updateToDoList();
+    toDoRender.setPriorityClass();
   })
 
   const updateToDoList = () => {
@@ -95,20 +96,17 @@ export const toDoController = (() => {
   }
 
 
-// Use child elements to loop through!!!
+// Update Priority based on user slection.
   const updatePriority = () => {
-    let i = 0
 
-    // Update the description
-    for (const e of getToDoPriority()){
-      console.log(e)
-      if (e.checked){
+    toDoItem().forEach( (item, iter) => {
         
-        toDoList[i].priority = e.id
-      }
-      
-      i++
-    }
+      setPriority(item).forEach( opt => {
+        if (opt.checked){
+          toDoList[iter].priority = opt.id;
+        }
+      })
+    })
   }
 
   // Delete button functionality
@@ -227,27 +225,46 @@ const toDoRender = (() => {
   };
 
 
+  const setPriorityClass = () => {
+
+    toDoItems().childNodes.forEach( (value, iter) => {
+      
+      setPriority(value).forEach( opt => {
+
+        
+        if (opt.id === toDoController.getToDoList()[iter].priority){
+          opt.checked = true;
+          if (opt.id === 'high'){
+            value.classList.add('high-priority');
+          }else {
+            value.classList.remove('high-priority');
+          }
+        }
+      })
+    })
+  }
+
+  const displayEachItem = () => {
+    toDoController.getToDoList().forEach( item => {        
+
+      toDoItems().appendChild(rendertoDoItem(item));
+    });
+  }
+
+
+
   const display = () => {
       // Remove previously loaded to do items
     removeAllChildNodes(toDoItems());
 
-    toDoController.getToDoList().forEach( item => {        
+    displayEachItem();
+    setPriorityClass();
 
-      toDoItems().appendChild(rendertoDoItem(item));
-
-      // Fill in Priority
-      setPriority(toDoItems().lastChild).forEach( opt => {
-        if (opt.id === item.priority) {
-          opt.checked = true;
-        }
-      })
-
-    });
     expandRetract();
     renderDeleteButton();
   }
 
-  return { display }
+  return { display, setPriorityClass }
   
 })();
 

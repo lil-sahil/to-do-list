@@ -13,6 +13,7 @@ ul > li {
 :root {
   --color-primary: #8fb2eb;
   --color-secondary: #d2e1fa;
+  --color-high-priority: #f02e4e;
 }
 
 
@@ -167,4 +168,8 @@ ul > li {
   font-size: 2rem;
   color: #fff;
   border-color: #fff;
+}
+
+.high-priority {
+  background-color: var(--color-high-priority);
 }

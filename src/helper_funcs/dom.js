@@ -29,7 +29,7 @@ export let getToDoDescription = () => {
 };
 
 export let getToDoPriority = () => {
-  return document.querySelectorAll(".priority > form > input")
+  return document.querySelectorAll(".priority > form")
 };
 
 
