@@ -5,7 +5,9 @@ import { toDoItems,
          getToDoTitle,
          getToDoDate,
          getToDoDescription,
-         toDoDelete} from "../helper_funcs/dom.js";
+         toDoDelete,
+         setPriority,
+         getToDoPriority} from "../helper_funcs/dom.js";
 
 
 
@@ -13,37 +15,41 @@ import { toDoItems,
 // To Do Factory
 // ------------------------------------------------------------------
 
-const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'Select Priority') => {
+const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'low') => {
   return { project, title, description,dueDate, priority };
 };
-
 
 
 
 // To Do Controller Module
 // ------------------------------------------------------------------
 
-const toDoController = (() => {
+export const toDoController = (() => {
 
   // Initialize List
   let toDoList = [];
+
+
+  const mainController = () => {
+    updateToDoList();
+    toDoRender.display();
+    deleteButton();
+  }
 
   // Push created to do list to list
   const appendToDo = (toDo) => {
     toDoList.push(toDo);
   };
 
+  
   addtoDoButton.addEventListener('click', () => {
     appendToDo( createToDo('Project 1', "Enter Task") );
-    updateToDoList();
-    toDoRender.display();
-    deleteButton();
+    mainController();      
   });
+  
 
-
-  // CLick event
+  // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
-    console.log('Clicked!')
     updateToDoList();
   })
 
@@ -51,6 +57,7 @@ const toDoController = (() => {
     updateDate()
     updateDescription()
     updateTitle()
+    updatePriority()
   }
 
 
@@ -87,6 +94,23 @@ const toDoController = (() => {
     }
   }
 
+
+// Use child elements to loop through!!!
+  const updatePriority = () => {
+    let i = 0
+
+    // Update the description
+    for (const e of getToDoPriority()){
+      console.log(e)
+      if (e.checked){
+        
+        toDoList[i].priority = e.id
+      }
+      
+      i++
+    }
+  }
+
   // Delete button functionality
   const deleteButton = () => {
     toDoDelete().forEach(e => {
@@ -97,24 +121,22 @@ const toDoController = (() => {
         
         toDoRender.display()
         deleteButton();
-
-        
       })
-
-
     })
   }
 
 
   const deleteItem = (title, description) => {
-    console.log(toDoList)
+    console.log(title);
+    console.log(description);
+    
     toDoList = toDoList.filter(listItem => listItem.title !== title)
-    console.log(toDoList) 
   }
 
   const getToDoList = () => {
     return toDoList
   }
+
 
 
   return { getToDoList, appendToDo }
@@ -146,6 +168,10 @@ const toDoRender = (() => {
     })
   }
 
+  // const setPriority = (prioritySelection) => {
+
+  // }
+
 
   const rendertoDoItem = (i) => {
     let title = i.title
@@ -164,6 +190,17 @@ const toDoRender = (() => {
         <div class = "description">
           <input type = "text" value = "${description}" class = "description-form">
         </div>
+
+        <div class = "priority">
+
+          <form>
+            <input type="radio" id="high" name="priority" value="high">
+            <label for="high">High</label><br>
+
+            <input type="radio" id="low" name="priority" value="low">
+            <label for="low">Low</label><br>
+          </form>
+        </div>      
 
         <div class = "delete"><i class="fas fa-trash-alt"></i></div>
       `      
@@ -197,6 +234,13 @@ const toDoRender = (() => {
     toDoController.getToDoList().forEach( item => {        
 
       toDoItems().appendChild(rendertoDoItem(item));
+
+      // Fill in Priority
+      setPriority(toDoItems().lastChild).forEach( opt => {
+        if (opt.id === item.priority) {
+          opt.checked = true;
+        }
+      })
 
     });
     expandRetract();
