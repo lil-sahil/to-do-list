@@ -22,10 +22,14 @@
     <div id="project-sidebar" class = "flex-row sub-titles">
       <div id="project-title" class = "sub-titles">Projects</div>
 
-      <div class="projects-list">
+      <div class="projects-list flex-col">
         <ul class="flex-row">
           <li>Project 1</li>
         </ul>
+
+        <div class="add-project">
+          <button class = "add" type="submit"><i class="fas fa-plus-circle"></i></button>
+        </div>
       </div>
     </div>
 
@@ -33,12 +37,12 @@
       <div id="to-do-list-title">To Do's</div>
       <div id = "to-do-items" class = "flex-col"></div>
       <div class="add-to-do">
-        <button type="submit"><i class="fas fa-plus-circle"></i></button>
+        <button class = "add" type="submit"><i class="fas fa-plus-circle"></i></button>
       </div>
     </div>
 
   </div>
 
-  <script type = "module" src="../src/modules/create_to_do.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

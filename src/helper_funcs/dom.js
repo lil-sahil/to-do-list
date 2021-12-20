@@ -28,12 +28,6 @@ export let getToDoDescription = () => {
   return document.getElementsByClassName("description-form")
 };
 
-export let getToDoPriority = () => {
-  return document.querySelectorAll(".priority > form")
-};
-
-
-
 export let toDoDelete = () => {
   return document.querySelectorAll('.to-do-item > .delete');
 };

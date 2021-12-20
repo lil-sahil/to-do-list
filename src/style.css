@@ -93,6 +93,8 @@ ul > li {
 
 .projects-list {
   width: 100%;
+  display: flex;
+  
 }
 
 .projects-list ul {
@@ -161,7 +163,7 @@ ul > li {
   display: none;
 }
 
-.add-to-do > button {
+button {
   margin-top: 2rem;
   background-color: var(--color-primary);
   border-radius: 50%;
