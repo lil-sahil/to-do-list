@@ -36,3 +36,9 @@ export let setPriority = (el) => {
   return el.querySelectorAll('.priority > form > input')
 };
 
+
+// Project DOM Elements
+export let projectNames = () => {
+  return document.querySelector(".project-list > flex-row > ")
+}
+

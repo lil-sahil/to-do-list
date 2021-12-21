@@ -6,8 +6,7 @@ import { toDoItems,
          getToDoDate,
          getToDoDescription,
          toDoDelete,
-         setPriority,
-         getToDoPriority} from "../helper_funcs/dom.js";
+         setPriority} from "../helper_funcs/dom.js";
 
 
 
