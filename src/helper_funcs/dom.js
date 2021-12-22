@@ -39,6 +39,6 @@ export let setPriority = (el) => {
 
 // Project DOM Elements
 export let projectNames = () => {
-  return document.querySelector(".project-list > flex-row > ")
+  return document.querySelectorAll(".projects-list > ul >li")
 }
 

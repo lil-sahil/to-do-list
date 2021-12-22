@@ -8,6 +8,7 @@ import { toDoItems,
          toDoDelete,
          setPriority} from "../helper_funcs/dom.js";
 
+import { projectController } from "./projects.js";
 
 
 
@@ -29,6 +30,11 @@ export const toDoController = (() => {
   let toDoList = [];
 
 
+  // Current selected project
+
+  
+
+
   const mainController = () => {
     updateToDoList();
     toDoRender.display();
@@ -42,7 +48,7 @@ export const toDoController = (() => {
 
   
   addtoDoButton.addEventListener('click', () => {
-    appendToDo( createToDo('Project 1', "Enter Task") );
+    appendToDo( createToDo(`${projectController.getCurrentSelectedProjectName()}`, "Enter Task") );
     mainController();      
   });
   

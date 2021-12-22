@@ -1,10 +1,22 @@
 import { toDoController } from "./create_to_do"
-
+import { projectNames } from "../helper_funcs/dom"
 
 
 // Project controller
 // ------------------------------------------------------------------
 export const projectController = (() => {
+
+  // Add Event Listners
+
+  const projectSelectedListner = () => {
+    
+    // Add "project-selected" class to project that is clicked
+    projectNames().forEach(ele => {
+      ele.addEventListener('click', () => {
+        ele.classList.add('project-selected')
+      })
+    })
+  }
 
   // Get the unique project names from to do list
   const getUniqueProjectNames = () => {
@@ -17,12 +29,25 @@ export const projectController = (() => {
 
   // Current selected Project
   const getCurrentSelectedProjectName = () => {
-    return 1
+    let currentSelectedProject = ""
+    console.log(projectNames())
+    projectNames().forEach(ele => {
+      if (ele.classList.contains('project-selected')){
+        currentSelectedProject = ele.innerHtml
+      }else {
+        ele.classList.remove('project-slected')
+      }
+    })
+    
+    return currentSelectedProject
   }
 
   
 
-  const mainController = () => {
+  const mainController = (() => {
+    // Add Event Listners
+    projectSelectedListner()
+
     // getUniqueProjectNames()
 
     // updateProjectName()
@@ -30,11 +55,10 @@ export const projectController = (() => {
     // deleteProjectName()
 
     // addProjectName()
-      console.log('Main Controller')
-  }
+  })()
 
 
-  return { mainController, getCurrentSelectedProject }
+  return { getCurrentSelectedProjectName }
 })()
 
 

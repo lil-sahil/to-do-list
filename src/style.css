@@ -114,6 +114,11 @@ ul > li {
   background-color: var(--color-secondary);
 }
 
+.project-selected {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
 /* To do title */
 #to-do-list-title {
   margin-top: 1rem;
