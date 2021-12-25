@@ -23,10 +23,7 @@ export const projectController = (() => {
 
     projectContainer().addEventListener('click', e => {
       removeSelections()
-      console.log(e)
-      e.target.addEventListener('click', () => {
-        e.target.classList.add('project-selected')
-      })
+      e.target.classList.add('project-selected')
     })
 
 
