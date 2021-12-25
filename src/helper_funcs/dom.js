@@ -42,3 +42,11 @@ export let projectNames = () => {
   return document.querySelectorAll(".projects-list > ul >li")
 }
 
+export let projectContainer = () => {
+  return document.querySelector(".projects-list > ul")
+}
+
+
+export let projectAddBtn = () => {
+  return document.querySelector('.add-project > button')
+}
