@@ -73,8 +73,11 @@ export const toDoController = (() => {
 
     // Update the title
     for (const e of getToDoTitle()){
-      toDoList[i].title = e.value
+      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
+        toDoList[i].title = e.value
+      }
       i++
+
     }
   }
 
@@ -84,7 +87,10 @@ export const toDoController = (() => {
 
     // Update the date
     for (const e of getToDoDate()){
-      toDoList[i].dueDate = e.value
+      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
+
+        toDoList[i].dueDate = e.value
+      }
       i++
     }
   }
@@ -95,7 +101,10 @@ export const toDoController = (() => {
 
     // Update the description
     for (const e of getToDoDescription()){
-      toDoList[i].description = e.value
+      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
+
+        toDoList[i].description = e.value
+      }
       i++
     }
   }
@@ -105,7 +114,7 @@ export const toDoController = (() => {
   const updatePriority = () => {
 
     toDoItem().forEach( (item, iter) => {
-        
+
       setPriority(item).forEach( opt => {
         if (opt.checked){
           toDoList[iter].priority = opt.id;
@@ -142,7 +151,7 @@ export const toDoController = (() => {
 
 
 
-  return { getToDoList, appendToDo }
+  return { getToDoList, appendToDo, mainController }
 })();
 
 
@@ -150,7 +159,7 @@ export const toDoController = (() => {
 
 // To Do Display Module
 // ------------------------------------------------------------------
-const toDoRender = (() => {
+export const toDoRender = (() => {
 
   const removeAllChildNodes = (ele) => {
     while (ele.firstChild){
@@ -250,9 +259,14 @@ const toDoRender = (() => {
   }
 
   const displayEachItem = () => {
-    toDoController.getToDoList().forEach( item => {        
+    removeAllChildNodes(toDoItems());
 
-      toDoItems().appendChild(rendertoDoItem(item));
+    toDoController.getToDoList().forEach( item => {
+      
+      if (item.project === projectController.getCurrentSelectedProjectName()){
+        toDoItems().appendChild(rendertoDoItem(item));
+      }
+
     });
   }
 
@@ -269,7 +283,7 @@ const toDoRender = (() => {
     renderDeleteButton();
   }
 
-  return { display, setPriorityClass }
+  return { display, setPriorityClass, displayEachItem }
   
 })();
 

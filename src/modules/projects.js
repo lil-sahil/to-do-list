@@ -1,4 +1,5 @@
-import { toDoController } from "./create_to_do"
+import { toDoController,
+         toDoRender } from "./create_to_do"
 
 import { projectNames, 
          projectAddBtn,
@@ -20,10 +21,11 @@ export const projectController = (() => {
 
   const projectSelectedListner = () => {
     
-
     projectContainer().addEventListener('click', e => {
       removeSelections()
       e.target.classList.add('project-selected')
+
+      toDoController.mainController()
     })
 
 
@@ -58,7 +60,7 @@ export const projectController = (() => {
     
     projectNames().forEach(ele => {
       if (ele.classList.contains('project-selected')){
-        currentSelectedProject = ele.innerHtml
+        currentSelectedProject = ele.innerHTML
       }
     })
     
@@ -94,14 +96,16 @@ export const projectController = (() => {
 // ------------------------------------------------------------------
 const projectRender = (() => {
 
+  // Event listner
+
+
   
   const mainDisplay = () => {
 
     let projectItem = document.createElement('li')
     
-    projectItem.innerHTML = `
-      Project
-    `
+    projectItem.innerHTML = 
+      `Project`
     return projectItem
   }
 
