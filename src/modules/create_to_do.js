@@ -1,24 +1,18 @@
 import { toDoItems,
          toDoItem, 
          toDoSummary, 
-         addtoDoButton, 
-         getToDoTitle,
-         getToDoDate,
-         getToDoDescription,
+         addtoDoButton,
          toDoDelete,
          setPriority} from "../helper_funcs/dom.js";
 
 import { projectController } from "./projects.js";
 
+import { dataController } from "./data.js";
 
-
-// To Do Factory
-// ------------------------------------------------------------------
 
 const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'low') => {
   return { project, title, description,dueDate, priority };
 };
-
 
 
 // To Do Controller Module
@@ -26,110 +20,32 @@ const createToDo = (project, title, description = 'Provide Description', dueDate
 
 export const toDoController = (() => {
 
-  // Initialize List
-  let toDoList = [];
-
-
-  // Current selected project
-
-  
-
-
-  const mainController = () => {
-    updateToDoList();
-    toDoRender.display();
-    deleteButton();
-  }
-
-  // Push created to do list to list
-  const appendToDo = (toDo) => {
-    toDoList.push(toDo);
-  };
-
-  
+  // Event Listners
   addtoDoButton.addEventListener('click', () => {
     appendToDo( createToDo(`${projectController.getCurrentSelectedProjectName()}`, "Enter Task") );
-    mainController();      
+    toDoRender.display();
   });
   
 
   // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
-    updateToDoList();
+    dataController.updateToDoList();
     toDoRender.setPriorityClass();
   })
 
-  const updateToDoList = () => {
-    updateDate()
-    updateDescription()
-    updateTitle()
-    updatePriority()
-  }
 
-
-  const updateTitle = () => {
-    
-    let i = 0
-
-    // Update the title
-    for (const e of getToDoTitle()){
-      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
-        toDoList[i].title = e.value
-      }
-      i++
-
-    }
-  }
-
-  const updateDate = () => {
-    
-    let i = 0
-
-    // Update the date
-    for (const e of getToDoDate()){
-      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
-
-        toDoList[i].dueDate = e.value
-      }
-      i++
-    }
-  }
-
-  const updateDescription = () => {
-    
-    let i = 0
-
-    // Update the description
-    for (const e of getToDoDescription()){
-      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
-
-        toDoList[i].description = e.value
-      }
-      i++
-    }
-  }
-
-
-// Update Priority based on user slection.
-  const updatePriority = () => {
-
-    toDoItem().forEach( (item, iter) => {
-
-      setPriority(item).forEach( opt => {
-        if (opt.checked){
-          toDoList[iter].priority = opt.id;
-        }
-      })
-    })
-  }
+  // Push created to do list to list
+  const appendToDo = (toDo) => {
+    dataController.getToDoList().push(toDo);
+  };
+ 
 
   // Delete button functionality
   const deleteButton = () => {
     toDoDelete().forEach(e => {
       e.addEventListener('click', (el) => {
 
-        deleteItem(el.path[2].querySelector('.summary > .title-form > input').value,
-                   el.path[2].querySelector('.description > input').value)
+        deleteItem(el.path[2].querySelector('.summary > .title-form > input').value)
         
         toDoRender.display()
         deleteButton();
@@ -138,20 +54,13 @@ export const toDoController = (() => {
   }
 
 
-  const deleteItem = (title, description) => {
-    console.log(title);
-    console.log(description);
+  const deleteItem = (title) => {
+    let newList = dataController.getToDoList().filter(listItem => listItem.title !== title)
     
-    toDoList = toDoList.filter(listItem => listItem.title !== title)
+    dataController.updateArray(newList)  
   }
 
-  const getToDoList = () => {
-    return toDoList
-  }
-
-
-
-  return { getToDoList, appendToDo, mainController }
+  return { appendToDo, deleteButton }
 })();
 
 
@@ -179,10 +88,6 @@ export const toDoRender = (() => {
       })
     })
   }
-
-  // const setPriority = (prioritySelection) => {
-
-  // }
 
 
   const rendertoDoItem = (i) => {
@@ -246,7 +151,7 @@ export const toDoRender = (() => {
       setPriority(value).forEach( opt => {
 
         
-        if (opt.id === toDoController.getToDoList()[iter].priority){
+        if (opt.id === dataController.getToDoList()[iter].priority){
           opt.checked = true;
           if (opt.id === 'high'){
             value.classList.add('high-priority');
@@ -261,7 +166,7 @@ export const toDoRender = (() => {
   const displayEachItem = () => {
     removeAllChildNodes(toDoItems());
 
-    toDoController.getToDoList().forEach( item => {
+    dataController.getToDoList().forEach( item => {
       
       if (item.project === projectController.getCurrentSelectedProjectName()){
         toDoItems().appendChild(rendertoDoItem(item));
@@ -271,19 +176,16 @@ export const toDoRender = (() => {
   }
 
 
-
   const display = () => {
-      // Remove previously loaded to do items
-    removeAllChildNodes(toDoItems());
 
     displayEachItem();
     setPriorityClass();
-
     expandRetract();
     renderDeleteButton();
+    toDoController.deleteButton()
   }
 
-  return { display, setPriorityClass, displayEachItem }
+  return { display, setPriorityClass }
   
 })();
 
