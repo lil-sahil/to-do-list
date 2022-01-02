@@ -1,3 +1,5 @@
+import { dataController } from "./data"
+
 import { toDoController,
          toDoRender } from "./create_to_do"
 
@@ -25,17 +27,10 @@ export const projectController = (() => {
       removeSelections()
       e.target.classList.add('project-selected')
 
-      toDoController.mainController()
+      getCurrentSelectedProjectName()
+
+      toDoRender.display()
     })
-
-
-    // // Add "project-selected" class to project that is clicked    
-    // projectNames().forEach(ele => {
-
-    //   ele.addEventListener('click', () => {
-    //     ele.classList.add('project-selected')
-    //   })
-    // })  
   }
 
   const projectAdd = () => {
@@ -75,6 +70,7 @@ export const projectController = (() => {
     projectAdd()
 
     // getUniqueProjectNames()
+
 
     // updateProjectName()
 
