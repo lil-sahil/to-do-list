@@ -94,9 +94,26 @@ export const toDoRender = (() => {
     let title = i.title
     let description = i.description
     let dueDate = i.dueDate
+    let priority = i.priority
 
     let toDoItem = document.createElement('div');
 
+    let inputHigh = ""
+    let inputLow = ""
+
+    // Checkmark based on priority
+    if (priority === 'high'){
+      inputHigh = '<input type="radio" id="high" name="priority" value="high" checked>'
+      inputLow = '<input type="radio" id="low" name="priority" value="low">'
+
+    }else {
+      inputHigh = '<input type="radio" id="high" name="priority" value="high">'
+      inputLow = '<input type="radio" id="low" name="priority" value="low" checked>'
+    }
+
+    console.log(inputHigh)
+    console.log(inputLow)
+    
     toDoItem.innerHTML = 
       `
         <div class = "summary">
@@ -111,10 +128,10 @@ export const toDoRender = (() => {
         <div class = "priority">
 
           <form>
-            <input type="radio" id="high" name="priority" value="high">
+            ${inputHigh}
             <label for="high">High</label><br>
 
-            <input type="radio" id="low" name="priority" value="low">
+            ${inputLow}
             <label for="low">Low</label><br>
           </form>
         </div>      
@@ -151,14 +168,12 @@ export const toDoRender = (() => {
       setPriority(value).forEach( opt => {
 
         
-        if (opt.id === dataController.getToDoList()[iter].priority){
-          opt.checked = true;
-          if (opt.id === 'high'){
-            value.classList.add('high-priority');
-          }else {
+        if ((opt.checked === true) & (opt.id === 'high')){
+          value.classList.add('high-priority')
+    
+          }else if ( (opt.checked === true) & (opt.id !== 'high') ) {
             value.classList.remove('high-priority');
           }
-        }
       })
     })
   }

@@ -29,8 +29,6 @@ export const projectController = (() => {
 
       getCurrentSelectedProjectName()
 
-      console.log(getCurrentSelectedProjectName())
-
       toDoRender.display()
     })
   }

@@ -29,7 +29,7 @@ export const dataController = (() => {
     updatePriority()
 
 
-    // console.log(toDoList)
+    console.log(toDoList)
   }
 
 
@@ -52,45 +52,63 @@ export const dataController = (() => {
   }
 
   const updateDate = () => {
+    let tempArray = []
+
+    tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
     
     let i = 0
-
-    // Update the date
     for (const e of getToDoDate()){
-      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
-
-        toDoList[i].dueDate = e.value
-      }
+      tempArray[i].dueDate = e.value
       i++
+    }
+
+    toDoList = toDoList.filter(item => item.project !== projectController.getCurrentSelectedProjectName())
+
+    for (const e of tempArray){
+      toDoList.push(e)
     }
   }
 
   const updateDescription = () => {
-    
+    let tempArray = []
+
+    tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
+
     let i = 0
-
-    // Update the description
     for (const e of getToDoDescription()){
-      if (toDoList[i].project === projectController.getCurrentSelectedProjectName()){
-
-        toDoList[i].description = e.value
-      }
+      tempArray[i].description = e.value     
       i++
+    }
+
+    toDoList = toDoList.filter(item => item.project !== projectController.getCurrentSelectedProjectName())
+
+    for (const e of tempArray){
+      toDoList.push(e)
     }
   }
 
 
 // Update Priority based on user slection.
   const updatePriority = () => {
+    let tempArray = []
+    tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
+
 
     toDoItem().forEach( (item, iter) => {
 
       setPriority(item).forEach( opt => {
         if (opt.checked){
-          toDoList[iter].priority = opt.id;
+          tempArray[iter].priority = opt.id;
         }
       })
     })
+
+    toDoList = toDoList.filter(item => item.project !== projectController.getCurrentSelectedProjectName())
+
+    for (const e of tempArray){
+      toDoList.push(e)
+    }
+    
   }
 
 
