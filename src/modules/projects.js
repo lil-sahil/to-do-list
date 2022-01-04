@@ -13,14 +13,6 @@ import { projectNames,
 export const projectController = (() => {
 
   // Add Event Listners
-
-  const removeSelections = () => {
-    // Remove previously selected projects
-    projectNames().forEach(ele => {
-      ele.classList.remove('project-selected')
-    })
-  }
-
   const projectSelectedListner = () => {
     
     projectContainer().addEventListener('click', e => {
@@ -33,8 +25,39 @@ export const projectController = (() => {
     })
   }
 
+
+  const updateProjectName = () => {
+    let projectOldName = getCurrentSelectedProjectName()
+    let projectNewName = ""
+
+    window.addEventListener('click', () => {
+
+      // Loop through the project names and find the odd one out that is not in the database
+      projectNames().forEach(ele => {
+
+        if ( !(dataController.getToDoList().includes(`${ele.querySelector('input').value}`)) ){
+          projectNewName = ele.querySelector('input').value
+          console.log(projectNewName)
+        }else {
+          console.log('ere')
+          projectNewName = projectOldName
+          return 1
+        }
+      })
+
+      let modefiedProjects = dataController.getToDoList().map(item => {
+        if (item.project === projectOldName){
+          item.project = projectNewName
+        }
+      })
+
+      dataController.updateArray(modefiedProjects)
+    })
+
+  }
+
   const projectAdd = () => {
-    projectAddBtn().addEventListener('click', () =>{
+    projectAddBtn().addEventListener('click', () => {
       // render project add.
       projectContainer().appendChild(projectRender.mainDisplay())
     })
@@ -49,13 +72,20 @@ export const projectController = (() => {
     return [... new Set(projects)]
   }
 
+  const removeSelections = () => {
+    // Remove previously selected projects
+    projectNames().forEach(ele => {
+      ele.classList.remove('project-selected')
+    })
+  }
+
   // Current selected Project
   const getCurrentSelectedProjectName = () => {
     let currentSelectedProject = ""
     
     projectNames().forEach(ele => {
       if (ele.classList.contains('project-selected')){
-        currentSelectedProject = ele.innerHTML
+        currentSelectedProject = ele.querySelector('input').value
       }
     })
     
@@ -63,6 +93,9 @@ export const projectController = (() => {
   }
 
   
+  const onClickController = (() => {
+    updateProjectName()
+  })()
 
   const mainController = (() => {
     // Add Event Listners
@@ -101,7 +134,10 @@ const projectRender = (() => {
     let projectItem = document.createElement('li')
     
     projectItem.innerHTML = 
-      `Project`
+      `
+        <input type = "text" value = "Project" class = "project">
+        <div class = "delete"><i class="fas fa-trash-alt"></i></div>   
+      `
     return projectItem
   }
 

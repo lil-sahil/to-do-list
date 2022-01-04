@@ -44,20 +44,30 @@ export const toDoController = (() => {
   const deleteButton = () => {
     toDoDelete().forEach(e => {
       e.addEventListener('click', (el) => {
-
         deleteItem(el.path[2].querySelector('.summary > .title-form > input').value)
         
         toDoRender.display()
-        deleteButton();
       })
     })
   }
 
 
   const deleteItem = (title) => {
-    let newList = dataController.getToDoList().filter(listItem => listItem.title !== title)
+
+    let tempList = dataController.getToDoList().filter(listItem => {
+      listItem.project === projectController.getCurrentSelectedProjectName() && listItem.title !== title
+    })
+    console.log('here')
+    let finalList = dataController.getToDoList().filter(listItem => listItem.project !== projectController.getCurrentSelectedProjectName())
+
+    for (const e of tempList){
+      finalList.push(e)
+    }
+
     
-    dataController.updateArray(newList)  
+    
+    dataController.updateArray(finalList)  
+    deleteButton();
   }
 
   return { appendToDo, deleteButton }

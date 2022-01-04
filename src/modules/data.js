@@ -23,12 +23,12 @@ export const dataController = (() => {
 
 
   const updateToDoList = () => {
+    
     updateDate()
     updateDescription()
     updateTitle()
     updatePriority()
-
-
+    
     console.log(toDoList)
   }
 
