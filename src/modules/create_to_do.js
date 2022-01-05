@@ -29,6 +29,8 @@ export const toDoController = (() => {
 
   // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
+    console.log(dataController.getToDoList())
+    projectController.updateProjectName();
     dataController.updateToDoList();
     toDoRender.setPriorityClass();
   })

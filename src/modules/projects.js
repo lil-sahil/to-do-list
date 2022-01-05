@@ -16,44 +16,45 @@ export const projectController = (() => {
   const projectSelectedListner = () => {
     
     projectContainer().addEventListener('click', e => {
-      removeSelections()
-      e.target.classList.add('project-selected')
-
-      getCurrentSelectedProjectName()
-
-      toDoRender.display()
+      
+      if (e.target.nodeName === "LI"){
+        
+        removeSelections()
+        e.target.classList.add('project-selected')
+  
+        getCurrentSelectedProjectName()
+  
+        toDoRender.display()
+      }
     })
   }
 
 
   const updateProjectName = () => {
-    let projectOldName = getCurrentSelectedProjectName()
-    let projectNewName = ""
+         
+    projectNames().forEach(name => {
+      // If project name not in dataset
+      if(!(dataController.getToDoList().includes(`${name.querySelector('input').value}`))){
+        let newProjectName = name.querySelector('input').value
 
-    window.addEventListener('click', () => {
+        getUniqueProjectNames().forEach(dataName => {
+                    
+          console.log(dataName)
+          if (!(getDOMProjectNames().includes(`${dataName}`))){
+            let oldProjectName = dataName
+            console.log(oldProjectName)
+            
+            let test = dataController.getToDoList().map(item => {
+              if (item.project === oldProjectName){
+                item.project = newProjectName
+                console.log(newProjectName)
+              } 
+            })
+          }
+        })
 
-      // Loop through the project names and find the odd one out that is not in the database
-      projectNames().forEach(ele => {
-
-        if ( !(dataController.getToDoList().includes(`${ele.querySelector('input').value}`)) ){
-          projectNewName = ele.querySelector('input').value
-          console.log(projectNewName)
-        }else {
-          console.log('ere')
-          projectNewName = projectOldName
-          return 1
-        }
-      })
-
-      let modefiedProjects = dataController.getToDoList().map(item => {
-        if (item.project === projectOldName){
-          item.project = projectNewName
-        }
-      })
-
-      dataController.updateArray(modefiedProjects)
+      }
     })
-
   }
 
   const projectAdd = () => {
@@ -63,9 +64,22 @@ export const projectController = (() => {
     })
   }
 
+
+  // Get all project names from DOM
+  const getDOMProjectNames = () => {
+
+    let domProjects = []
+
+    projectNames().forEach(name => {
+      domProjects.push(name)
+    })
+
+    return domProjects
+  }
+
   // Get the unique project names from to do list
   const getUniqueProjectNames = () => {
-    let projects = toDoController.getToDoList().forEach(item => {
+    let projects = dataController.getToDoList().forEach(item => {
       item.project
     })
 
@@ -113,7 +127,7 @@ export const projectController = (() => {
   })()
 
 
-  return { getCurrentSelectedProjectName }
+  return { getCurrentSelectedProjectName, updateProjectName}
 })()
 
 
