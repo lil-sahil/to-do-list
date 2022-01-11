@@ -10,7 +10,7 @@ import { projectController } from "./projects.js";
 import { dataController } from "./data.js";
 
 
-const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'low') => {
+export const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'low') => {
   return { project, title, description,dueDate, priority };
 };
 
@@ -29,6 +29,7 @@ export const toDoController = (() => {
 
   // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
+    console.log(dataController.getToDoList())
     projectController.updateProjectName();
     dataController.updateToDoList();
     toDoRender.setPriorityClass();

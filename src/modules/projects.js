@@ -1,7 +1,8 @@
 import { dataController } from "./data"
 
 import { toDoController,
-         toDoRender } from "./create_to_do"
+         toDoRender,
+         createToDo } from "./create_to_do"
 
 import { projectNames, 
          projectAddBtn,
@@ -11,6 +12,8 @@ import { projectNames,
 // Project controller
 // ------------------------------------------------------------------
 export const projectController = (() => {
+
+  let projectCount = 1;
 
   // Add Event Listners
   const projectSelectedListner = () => {
@@ -43,8 +46,6 @@ export const projectController = (() => {
           if (!(getDOMProjectNames().includes(`${dataName}`))){
             let oldProjectName = dataName
 
-
-
             dataController.updateArray(dataController.getToDoList().map(item => {
               if (item.project === oldProjectName){
                 item.project = newProjectName                 
@@ -61,8 +62,15 @@ export const projectController = (() => {
 
   const projectAdd = () => {
     projectAddBtn().addEventListener('click', () => {
+
+      let projectName = `Project ${projectCount.toString()}`
+
       // render project add.
-      projectContainer().appendChild(projectRender.mainDisplay())
+      projectContainer().appendChild(projectRender.mainDisplay(projectName))
+      // Add project into database
+      toDoController.appendToDo( createToDo(`${projectName}`, "Enter Task") );
+      
+      projectCount += 1
     })
   }
 
@@ -111,11 +119,6 @@ export const projectController = (() => {
     return currentSelectedProject
   }
 
-  
-  const onClickController = (() => {
-    updateProjectName()
-  })()
-
   const mainController = (() => {
     // Add Event Listners
     projectSelectedListner()
@@ -148,13 +151,13 @@ const projectRender = (() => {
 
 
   
-  const mainDisplay = () => {
+  const mainDisplay = (projectName) => {
 
     let projectItem = document.createElement('li')
     
     projectItem.innerHTML = 
       `
-        <input type = "text" value = "Project" class = "project">
+        <input type = "text" value = "${projectName}" class = "project">
         <div class = "delete"><i class="fas fa-trash-alt"></i></div>   
       `
     return projectItem
