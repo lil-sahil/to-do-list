@@ -34,27 +34,29 @@ export const projectController = (() => {
          
     projectNames().forEach(name => {
       // If project name not in dataset
-      if(!(dataController.getToDoList().includes(`${name.querySelector('input').value}`))){
+      if(!(getUniqueProjectNames().includes(`${name.querySelector('input').value}`))){
         let newProjectName = name.querySelector('input').value
+        
 
         getUniqueProjectNames().forEach(dataName => {
                     
-          console.log(dataName)
           if (!(getDOMProjectNames().includes(`${dataName}`))){
             let oldProjectName = dataName
-            console.log(oldProjectName)
-            
-            let test = dataController.getToDoList().map(item => {
+
+
+
+            dataController.updateArray(dataController.getToDoList().map(item => {
               if (item.project === oldProjectName){
-                item.project = newProjectName
-                console.log(newProjectName)
-              } 
-            })
+                item.project = newProjectName                 
+              }
+              return item 
+            }))
           }
         })
 
       }
     })
+
   }
 
   const projectAdd = () => {
@@ -79,11 +81,14 @@ export const projectController = (() => {
 
   // Get the unique project names from to do list
   const getUniqueProjectNames = () => {
-    let projects = dataController.getToDoList().forEach(item => {
-      item.project
+    let projects = [] 
+    
+    dataController.getToDoList().filter(item => {
+      projects.push(item.project)
+      
     })
-
-    return [... new Set(projects)]
+    
+    return projects
   }
 
   const removeSelections = () => {

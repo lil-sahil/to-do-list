@@ -24,12 +24,14 @@ export const dataController = (() => {
 
   const updateToDoList = () => {
     
+    console.log(toDoList)
+    
     updateDate()
     updateDescription()
     updateTitle()
     updatePriority()
     
-    console.log(toDoList)
+    // console.log(toDoList)
   }
 
 
@@ -55,7 +57,6 @@ export const dataController = (() => {
     let tempArray = []
 
     tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
-    console.log(projectController.getCurrentSelectedProjectName())
     
     let i = 0
     for (const e of getToDoDate()){
