@@ -29,7 +29,6 @@ export const toDoController = (() => {
 
   // CLick event on window to update the list everytime the user clicks on the window.
   window.addEventListener('click', () => {
-    console.log(dataController.getToDoList())
     projectController.updateProjectName();
     dataController.updateToDoList();
     toDoRender.setPriorityClass();
@@ -59,7 +58,7 @@ export const toDoController = (() => {
     let tempList = dataController.getToDoList().filter(listItem => {
       listItem.project === projectController.getCurrentSelectedProjectName() && listItem.title !== title
     })
-    console.log('here')
+
     let finalList = dataController.getToDoList().filter(listItem => listItem.project !== projectController.getCurrentSelectedProjectName())
 
     for (const e of tempList){

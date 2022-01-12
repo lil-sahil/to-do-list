@@ -17,7 +17,6 @@ export const projectController = (() => {
 
   // Add Event Listners
   const projectSelectedListner = () => {
-    
     projectContainer().addEventListener('click', e => {
       
       if (e.target.nodeName === "LI"){
@@ -32,17 +31,28 @@ export const projectController = (() => {
     })
   }
 
+  const projectDeleteButtonListener = () => {
+    projectContainer().addEventListener('click', e => {
+      if (e.target.parentNode.classList.contains('delete')){
+        deleteProject(e.target.parentNode.previousElementSibling.value)
+        projectRender.render()
+      }
+    })
+  }
+
 
   const updateProjectName = () => {
+    // Chache the unique projects
+    let uniqueProjectNames = getUniqueProjectNames()
          
     projectNames().forEach(name => {
       // If project name not in dataset
-      if(!(getUniqueProjectNames().includes(`${name.querySelector('input').value}`))){
+      if(!(uniqueProjectNames.includes(`${name.querySelector('input').value}`))){
         let newProjectName = name.querySelector('input').value
         
 
-        getUniqueProjectNames().forEach(dataName => {
-                    
+        uniqueProjectNames.forEach(dataName => {
+
           if (!(getDOMProjectNames().includes(`${dataName}`))){
             let oldProjectName = dataName
 
@@ -62,13 +72,14 @@ export const projectController = (() => {
 
   const projectAdd = () => {
     projectAddBtn().addEventListener('click', () => {
-
+      
       let projectName = `Project ${projectCount.toString()}`
 
-      // render project add.
-      projectContainer().appendChild(projectRender.mainDisplay(projectName))
       // Add project into database
       toDoController.appendToDo( createToDo(`${projectName}`, "Enter Task") );
+      
+      // render project add.
+      projectRender.render()
       
       projectCount += 1
     })
@@ -81,7 +92,8 @@ export const projectController = (() => {
     let domProjects = []
 
     projectNames().forEach(name => {
-      domProjects.push(name)
+      
+      domProjects.push(name.querySelector('input').value)
     })
 
     return domProjects
@@ -93,10 +105,9 @@ export const projectController = (() => {
     
     dataController.getToDoList().filter(item => {
       projects.push(item.project)
-      
     })
     
-    return projects
+    return [... new Set(projects)]
   }
 
   const removeSelections = () => {
@@ -119,6 +130,18 @@ export const projectController = (() => {
     return currentSelectedProject
   }
 
+
+  const deleteProject = (projectName) => {
+    dataController.updateArray(dataController.getToDoList().filter(item => item.project !== projectName))
+    toDoRender.display()
+  }
+
+  const clickEventListners = (() => {
+    window.addEventListener('click', () => {
+      projectDeleteButtonListener()
+    })
+  })()
+
   const mainController = (() => {
     // Add Event Listners
     projectSelectedListner()
@@ -135,7 +158,7 @@ export const projectController = (() => {
   })()
 
 
-  return { getCurrentSelectedProjectName, updateProjectName}
+  return { getCurrentSelectedProjectName, updateProjectName, getUniqueProjectNames}
 })()
 
 
@@ -147,11 +170,26 @@ export const projectController = (() => {
 // ------------------------------------------------------------------
 const projectRender = (() => {
 
-  // Event listner
+  const clearProjects = () => {
+    while (projectContainer().firstChild) {
+      projectContainer().firstChild.remove()
+    }
+  }
+
+  const render = () => {
+
+    clearProjects()
+
+    projectController.getUniqueProjectNames().forEach(item => {
+      projectContainer().appendChild(createProject(item))
+    })
+
+
+  }
 
 
   
-  const mainDisplay = (projectName) => {
+  const createProject = (projectName) => {
 
     let projectItem = document.createElement('li')
     
@@ -164,5 +202,5 @@ const projectRender = (() => {
   }
 
 
-  return { mainDisplay }
+  return { createProject, render }
 })()

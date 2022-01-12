@@ -36,6 +36,11 @@ export const dataController = (() => {
 
 
   const updateTitle = () => {
+
+    if ( !(projectController.getCurrentSelectedProjectName()) ){
+      return 0
+    }
+    
     let tempArray = []
 
     tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
@@ -54,6 +59,11 @@ export const dataController = (() => {
   }
 
   const updateDate = () => {
+
+    if ( !(projectController.getCurrentSelectedProjectName()) ){
+      return 0
+    }
+    
     let tempArray = []
 
     tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
@@ -72,6 +82,11 @@ export const dataController = (() => {
   }
 
   const updateDescription = () => {
+
+    if ( !(projectController.getCurrentSelectedProjectName()) ){
+      return 0
+    }
+
     let tempArray = []
 
     tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
@@ -92,6 +107,11 @@ export const dataController = (() => {
 
 // Update Priority based on user slection.
   const updatePriority = () => {
+
+    if ( !(projectController.getCurrentSelectedProjectName()) ){
+      return 0
+    }
+
     let tempArray = []
     tempArray = toDoList.filter( item => item.project === projectController.getCurrentSelectedProjectName())
 
