@@ -9,6 +9,8 @@ import { projectController } from "./projects.js";
 
 import { dataController } from "./data.js";
 
+import { saveLocalData } from "./local_storage.js";
+
 
 export const createToDo = (project, title, description = 'Provide Description', dueDate = '2021-10-01', priority = 'low') => {
   return { project, title, description,dueDate, priority };
@@ -32,6 +34,7 @@ export const toDoController = (() => {
     projectController.updateProjectName();
     dataController.updateToDoList();
     toDoRender.setPriorityClass();
+    saveLocalData(dataController.getToDoList());
   })
 
 

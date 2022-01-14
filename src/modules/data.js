@@ -8,6 +8,7 @@ import { toDoItem,
          setPriority} from "../helper_funcs/dom.js";
 
 
+
 export const dataController = (() => {
 
   // Initialize List

@@ -168,7 +168,7 @@ export const projectController = (() => {
 
 // Project Render
 // ------------------------------------------------------------------
-const projectRender = (() => {
+export const projectRender = (() => {
 
   const clearProjects = () => {
     while (projectContainer().firstChild) {
@@ -179,11 +179,11 @@ const projectRender = (() => {
   const render = () => {
 
     clearProjects()
+    
 
     projectController.getUniqueProjectNames().forEach(item => {
       projectContainer().appendChild(createProject(item))
     })
-
 
   }
 
