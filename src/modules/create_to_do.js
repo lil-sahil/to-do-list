@@ -5,7 +5,7 @@ import { toDoItems,
          toDoDelete,
          setPriority} from "../helper_funcs/dom.js";
 
-import { projectController } from "./projects.js";
+import { projectController, projectRender } from "./projects.js";
 
 import { dataController } from "./data.js";
 
@@ -30,8 +30,12 @@ export const toDoController = (() => {
   
 
   // CLick event on window to update the list everytime the user clicks on the window.
-  window.addEventListener('click', () => {
-    projectController.updateProjectName();
+  window.addEventListener('click', (e) => {
+
+    if (!(e.target.classList.contains('project'))){
+      projectController.updateProjectName();
+      projectRender.render()
+    }
     dataController.updateToDoList();
     toDoRender.setPriorityClass();
     saveLocalData(dataController.getToDoList());

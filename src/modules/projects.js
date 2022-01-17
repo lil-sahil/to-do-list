@@ -56,18 +56,18 @@ export const projectController = (() => {
           if (!(getDOMProjectNames().includes(`${dataName}`))){
             let oldProjectName = dataName
 
-            dataController.updateArray(dataController.getToDoList().map(item => {
-              if (item.project === oldProjectName){
-                item.project = newProjectName                 
-              }
-              return item 
-            }))
+            
+              dataController.updateArray(dataController.getToDoList().map(item => {
+                if (item.project === oldProjectName){
+                  item.project = newProjectName                 
+                }
+                return item 
+              }))
           }
         })
 
       }
     })
-
   }
 
   const projectAdd = () => {
@@ -147,14 +147,6 @@ export const projectController = (() => {
     projectSelectedListner()
     projectAdd()
 
-    // getUniqueProjectNames()
-
-
-    // updateProjectName()
-
-    // deleteProjectName()
-
-    // addProjectName()
   })()
 
 
@@ -179,6 +171,7 @@ export const projectRender = (() => {
   const render = () => {
 
     clearProjects()
+    console.log('rendering Project')
     
 
     projectController.getUniqueProjectNames().forEach(item => {
