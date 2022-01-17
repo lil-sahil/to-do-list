@@ -58,8 +58,9 @@ export const toDoController = (() => {
 
   const deleteItem = (title) => {
 
+
     let tempList = dataController.getToDoList().filter(listItem => {
-      listItem.project === projectController.getCurrentSelectedProjectName() && listItem.title !== title
+      return listItem.project === projectController.getCurrentSelectedProjectName() && listItem.title !== title
     })
 
     let finalList = dataController.getToDoList().filter(listItem => listItem.project !== projectController.getCurrentSelectedProjectName())

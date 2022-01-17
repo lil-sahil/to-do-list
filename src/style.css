@@ -8,6 +8,11 @@ ul > li {
   list-style: none;
 }
 
+input {
+  border-radius: 5px;
+
+}
+
 
 /* Helper classes */
 :root {
@@ -94,7 +99,8 @@ ul > li {
 .projects-list {
   width: 100%;
   display: flex;
-  
+  position: sticky;
+  top: 0;
 }
 
 .projects-list ul {
@@ -179,4 +185,22 @@ button {
 
 .high-priority {
   background-color: var(--color-high-priority);
+}
+
+.priority > form {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.priority > form > input {
+  margin-left: 10px;
+}
+
+.priority > form > label {
+  margin-left: 5px;
+  font-size: 1rem;
+  font-weight: normal;
 }
